@@ -4,5 +4,5 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(),tailwindcss()],
-  base: "https://Proyectos-web-2025.github.io/barberia-frontend"
+  base: "/barberia-frontend/"
 })
