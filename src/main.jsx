@@ -8,26 +8,10 @@ import {
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import './index.css'
-import App from './App.jsx'
+import './index.css' // importa styles de mi aplicativo
 
-// Define las rutas de tu aplicación con sus respectivos componentes.
-const router = createBrowserRouter(
-  [
-    {
-      // Ruta raíz ("/") que renderiza el componente App.
-      path: "/",
-      element: <App />,
-    },
-  ],
-  {
-    /**
-     * "basename" especifica la base del path cuando se despliega en una subcarpeta,
-     * en GitHub Pages dentro de /barberia-frontend.
-     */
-    basename: "/barberia-frontend",
-  }
-);
+import router from "./routes/router"; // importar rutas de mis paginas
+
 
 // Obtiene el elemento HTML donde se montará la aplicación React.
 const root = document.getElementById("root");
