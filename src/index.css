@@ -1,1 +1,7 @@
+/* Este archivo solamente sera utilizado para importar styles deel aplicativo*/
+
+/* librerias */
 @import "tailwindcss";
+
+/* archivos css */
+@import "./styles/base.css"
