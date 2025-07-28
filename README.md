@@ -1,17 +1,36 @@
-# React + Vite
+# Proyecto de Aprendizaje - React + Vite + TailwindCSS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este pequeño proyecto se realiza con el fin de aprender sobre React y una nueva librería como lo es Tailwind CSS.
 
-Currently, two official plugins are available:
+La idea también es seguir descubriendo nuevas cosas a medida que avanzamos en el proyecto, interactuando con herramientas modernas que son utilizadas a nivel laboral.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Progreso de Aprendizaje
 
-## Expanding the ESLint configuration
+Hasta el momento, he aprendido e implementado lo siguiente:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Estructuración de carpetas y componentes en un proyecto React.
+- Uso de herramientas modernas como **Git** y sus comandos para el control de versiones.
+- Comandos para subir mi proyecto local a **GitHub**.
+- Uso básico de **React Router** para el manejo de rutas en la aplicación.
+- Introducción al uso de **Tailwind CSS** para estilos rápidos y reutilizables.
+- Próximamente, comenzaré a trabajar con **React Hook Form** para la gestión eficiente de formularios.
+- Uso práctico de React Hook Form para la validación de campos y gestión eficiente de formularios.
+- Incorporación de React Icons para mejorar la interfaz visual de los formularios y componentes.
 
+## Tecnologías utilizadas
 
-MI DESCRIPCION 
-Este pequeño proyecto se hace con el fin de aprender sobre react y una nueva libreria como lo es tailwindcss
-La idea tambien es seguir descubriendo nuevas cosas a medida que avanzamos en el proyecto 
+- React
+- Vite
+- Tailwind CSS
+- React Router DOM
+- Git & GitHub
+- React Hook Form
+- React Icons
+
+## Objetivo del Proyecto
+
+Explorar el ecosistema moderno de desarrollo frontend y prepararme para entornos laborales reales mediante el uso de herramientas actuales y buenas prácticas.
+
+---
+
+Este proyecto forma parte de mi proceso de formación como ingeniero de sistemas y desarrollador de software.
