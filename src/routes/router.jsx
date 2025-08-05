@@ -6,7 +6,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 // importaciones de paginas
-import Login from "../pages/login";
+import Login from "../pages/auth/login";
 
 // Define las rutas de tu aplicación con sus respectivos componentes.
 const router = createBrowserRouter(
