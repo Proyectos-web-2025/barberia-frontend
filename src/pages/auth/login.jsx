@@ -22,8 +22,10 @@ function Login() {
     formState: { errors },
   } = useForm();
 
-  const { mutate, isLoading, error } = useLogin();
-
+  const { mutate} = useLogin();
+  /**
+   * Funcion que recoge los datos del formulario para darle manejo 
+   */
   const onSubmit = (data) => {
     mutate(data); // Dispara el login con los datos del formulario
   };

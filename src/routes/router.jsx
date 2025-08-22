@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 
 // importaciones de paginas
 import Login from "../pages/auth/login";
+import ResetPassword from "../pages/auth/recoverAccess";
 
 // Define las rutas de tu aplicación con sus respectivos componentes.
 const router = createBrowserRouter(
@@ -15,6 +16,11 @@ const router = createBrowserRouter(
       // Ruta raíz ("/") que renderiza el componente App.
       path: "/",
       element: <Login />,
+    },
+    {
+      // ruta para restablecer contraseña
+      path: "resetpassword",
+      element: <ResetPassword />,
     },
   ],
   {
