@@ -23,7 +23,7 @@ const PasswordInput = ({
       {/* Etiqueta descriptiva */}
       <label
         htmlFor={id}
-        className="block text-amber-50 text-base mb-1 tracking-wide"
+        className="block text-amber-50 text-base mb-1 tracking-wide font-mono"
       >
         {labelText}
       </label>
@@ -56,7 +56,7 @@ const PasswordInput = ({
 
       {/* Mensaje de error */}
       {errors?.[name] && (
-        <p role="alert" className="text-red-500 flex items-center gap-1 mt-1">
+        <p role="alert" className="text-red-500 flex items-center gap-1 mt-1 font-mono">
           <PiWarningCircle />
           {errors[name].message}
         </p>

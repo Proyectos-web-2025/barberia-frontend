@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"; // importacion de libreria para el ma
 import { PiWarningCircle } from "react-icons/pi"; // importacion de libreria para iconos
 import toast, { Toaster } from "react-hot-toast"; // libreria para el estlilo de alertas
 
-import { useLogin } from "../../hooks/useAuth.jsx";
+import { useLogin } from "../../hooks/auth/uselogin.jsx";
 import PasswordInput from "../../components/password.jsx";
 
 function Login() {
@@ -22,9 +22,9 @@ function Login() {
     formState: { errors },
   } = useForm();
 
-  const { mutate} = useLogin();
+  const { mutate } = useLogin();
   /**
-   * Funcion que recoge los datos del formulario para darle manejo 
+   * Funcion que recoge los datos del formulario para darle manejo
    */
   const onSubmit = (data) => {
     mutate(data); // Dispara el login con los datos del formulario
@@ -47,7 +47,7 @@ function Login() {
             <div className="mb-6">
               <label
                 htmlFor="username"
-                className="block text-amber-50 text-base mb-1 tracking-wide"
+                className="block text-amber-50 text-base mb-1 tracking-wide font-mono"
               >
                 Username
               </label>
@@ -66,7 +66,7 @@ function Login() {
               {errors.username && (
                 <p
                   role="alert"
-                  className="text-red-500 flex items-center gap-1"
+                  className="text-red-500 flex items-center gap-1 font-mono"
                 >
                   <PiWarningCircle /> {/* icono */}
                   {errors.username.message}
@@ -76,11 +76,11 @@ function Login() {
 
             {/* Campo de contraseña */}
             <PasswordInput register={register} errors={errors} />
-            
+
             {/* Botón de login */}
             <button
               type="submit"
-              className="w-full py-2 text-white font-semibold bg-gradient-to-r from-yellow-600 to-yellow-900 hover:from-yellow-500 hover:to-yellow-800 transition duration-300 rounded cursor-pointer"
+              className="font-mono w-full py-2 text-white font-semibold bg-gradient-to-r from-yellow-600 to-yellow-900 hover:from-yellow-500 hover:to-yellow-800 transition duration-300 rounded cursor-pointer"
             >
               ENTER...
             </button>

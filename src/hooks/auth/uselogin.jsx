@@ -1,6 +1,6 @@
 // importacion de libreria para el manejo de respuestas para los formularios
 import { useMutation } from "@tanstack/react-query";
-import { loginUser } from "@/Apis/auth"; // importacion de nuestra funcion que consume Api
+import { loginUser } from "@/Apis/auth/loginApi"; // importacion de nuestra funcion que consume Api
 
 import toast, { Toaster } from "react-hot-toast"; // libreria para el estlilo de alertas
 
