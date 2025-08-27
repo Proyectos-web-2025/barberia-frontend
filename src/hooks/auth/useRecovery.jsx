@@ -1,24 +1,29 @@
 // importacion de libreria para el manejo de respuestas para los formularios
-import { recoveryUser, MethodRecovery } from "@/Apis/auth/recoveryApi";
+import {
+  recoveryUser,
+  MethodRecovery,
+  codeRecovery,
+} from "@/Apis/auth/recoveryApi";
 import { decodeTokenPayload } from "../../utils/decodeTokenPayload";
 
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
+import { data } from "react-router";
 
 // hook para el formualrio del paso 1 - que es la verificacion del usuario y recibir sus datos
 export const useRecovery = (onSuccessCallback) => {
   return useMutation({
-    mutationFn: recoveryUser,
+    mutationFn: recoveryUser, // enviamos los datos a la api
     onSuccess: (data) => {
       console.log(data.message);
-      const { token } = data;
+      const { token } = data; // obtenemos el token
       const userData = decodeTokenPayload(token);
 
       if (!userData) {
         toast.error("Invalid or unreadable token");
         return;
       }
-
+      // retornamos los datos del servidor a nustra pagina
       if (onSuccessCallback) {
         onSuccessCallback(userData.correo, userData.telefono, token);
       }
@@ -39,6 +44,22 @@ export const useMethodRecovery = () => {
       console.log(data.message);
     },
     onError: (error) => {
+      console.log(error);
+      const backendMessage = error.response?.data?.detail || "Error inesperado";
+      toast.error(backendMessage);
+    },
+  });
+};
+
+// funcion para enviar el  codigo ingresado por el usuario
+export const useCodeRecovery = () => {
+  return useMutation({
+    mutationFn: codeRecovery,
+    onSuccess: (data) => {
+      console.log(data.message);
+    },
+    onError: (error) => {
+      console.log(error);
       const backendMessage = error.response?.data?.detail || "Error inesperado";
       toast.error(backendMessage);
     },
