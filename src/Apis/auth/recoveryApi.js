@@ -5,6 +5,7 @@
 import axios from "axios"; // importacion de la libreria para manejar las peticion https
 
 import BASE_URL from "../../config";
+import { data } from "react-router";
 
 // Usa la pública si estás en producción o compartiendo el backend
 const API_URL = `${BASE_URL}/resetAuth/UserRecovery`;
@@ -12,6 +13,8 @@ const API_URL = `${BASE_URL}/resetAuth/UserRecovery`;
 const API_URL_METHOD = `${BASE_URL}/resetAuth/MethodRecovery`;
 
 const API_URL_CODE = `${BASE_URL}/resetAuth/CodeRecovery`;
+
+const API_URL_CHANGEPASSWORD = `${BASE_URL}/resetAuth/ChangePassword`;
 
 /**
  *  funcion para consumir ruta de la api del inicio de sesion,
@@ -41,14 +44,27 @@ const MethodRecovery = async (data) => {
  */
 const codeRecovery = async (data) => {
   const token = data.token;
-  
+
   const response = await axios.post(API_URL_CODE, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  return response.data
+  return response.data;
+};
+/**
+ * enviar nueva contraseña al servidor + token con expiracion
+ */
+
+const changePassword = async (data) => {
+  const token = data.token;
+
+  const response = await axios.post(API_URL_CHANGEPASSWORD, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
 };
 
-export { recoveryUser, MethodRecovery , codeRecovery};
-
+export { recoveryUser, MethodRecovery, codeRecovery, changePassword };

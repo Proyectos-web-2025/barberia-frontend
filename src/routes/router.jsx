@@ -3,7 +3,7 @@
  */
 
 // importacion de la libreria react router
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { createBrowserRouter } from "react-router-dom";
 
 // importaciones de paginas
 import Login from "../pages/auth/login";
@@ -19,7 +19,7 @@ const router = createBrowserRouter(
     },
     {
       // ruta para restablecer contraseña
-      path: "recovery",
+      path: "/recovery",
       element: <Recovery />,
     },
   ],

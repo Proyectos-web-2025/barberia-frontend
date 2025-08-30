@@ -7,7 +7,7 @@ import { PiWarningCircle } from "react-icons/pi"; // importacion de libreria par
 import toast, { Toaster } from "react-hot-toast"; // libreria para el estlilo de alertas
 
 import { useLogin } from "../../hooks/auth/uselogin.jsx";
-import PasswordInput from "../../components/password.jsx";
+import PasswordInput from "../../utils/password.jsx";
 
 function Login() {
   /**

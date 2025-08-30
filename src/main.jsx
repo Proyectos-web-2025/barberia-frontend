@@ -1,5 +1,5 @@
 // Importacion de la libreria para utilizar react-router
-import { RouterProvider } from "react-router";
+import { RouterProvider } from "react-router-dom";
 
 // importaciones para renderizar la aplicacion
 import React from "react";

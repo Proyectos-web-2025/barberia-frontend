@@ -79,7 +79,7 @@ function HelpIconModal({
                 <p className="text-gray-800 mb-4 font-mono">{message}</p>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className=" font-mono mt-5 px-4 py-2 text-white font-semibold bg-gradient-to-r from-yellow-600 to-yellow-900 hover:from-yellow-500 hover:to-yellow-800 transition duration-300 rounded cursor-pointer"
+                  className=" font-mono mb--3 px-4 py-2 text-white font-semibold bg-gradient-to-r from-yellow-600 to-yellow-900 hover:from-yellow-500 hover:to-yellow-800 transition duration-300 rounded cursor-pointer"
                 >
                   Close
                 </button>

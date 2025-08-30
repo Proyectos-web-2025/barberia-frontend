@@ -2,16 +2,26 @@
  * Archivo dedicado para el restablecimieno de contraseña
  *
  */
-
 import { useState } from "react"; // libreria de react para el manejo de visivilidad
-import { useForm, Controller } from "react-hook-form"; // libreria para el manejo del formulario
-import { PiWarningCircle } from "react-icons/pi"; // importacion de libreria para iconos
+import { useForm } from "react-hook-form"; // libreria para el manejo del formulario
+import { yupResolver } from "@hookform/resolvers/yup"; // libreria para integrar yup con react-hook-form
+import { PiWarningCircle} from "react-icons/pi"; // importacion de libreria para iconos
+import { AiOutlineWarning } from 'react-icons/ai';
 import toast, { Toaster } from "react-hot-toast"; // libreria para el estlilo de alertas
 import OtpInput from "react-otp-input"; // libreria para hacer input de codigo OTP
 
-import { useRecovery, useMethodRecovery , useCodeRecovery } from "../../hooks/auth/useRecovery";
-import HelpIconModal from "../../components/HelpIconModal";
-import { MaskedEmail, MaskedPhone } from "../../components/MaskedSensitive";
+// importaciones de hook para cada formualrio
+import {
+  useRecovery,
+  useMethodRecovery,
+  useCodeRecovery,
+  useChangePassword,
+} from "../../hooks/auth/useRecovery";
+
+import HelpIconModal from "../../utils/HelpIconModal"; // utilidad de icono con modal
+import PasswordInput from "../../utils/password"; // uilidad de contraseña con show
+import { MaskedEmail, MaskedPhone } from "../../utils/MaskedSensitive"; // utilidad para enmascara datos del usuario (email - tell)
+import { passwordSchema } from "../../utils/validationSchemas"; // utilidad para agregar validacion estricta al campo
 import { data } from "react-router";
 
 function Recovery() {
@@ -22,7 +32,9 @@ function Recovery() {
     username: useForm(),
     method: useForm(),
     code: useForm(),
+    confirmPassword: useForm({ resolver: yupResolver(passwordSchema) }), // se complemente hook form con yup
   };
+
   /**
    * Se extraen las funciones necesarias para registrar campos, manejar errores , manejar el envío
    * para cada formulario
@@ -40,6 +52,12 @@ function Recovery() {
   } = forms.method;
 
   const { handleSubmit: handleSubmitCode } = forms.code;
+
+  const {
+    register: registerConfirmPassword,
+    handleSubmit: handleSubmitConfirmPassword,
+    formState: { errors: errorsConfirmPassword },
+  } = forms.confirmPassword;
 
   // almacena los datos obtenidos del bakend para darle visual al usuario (email,tell, token)
   const [infoUser, setInfoUser] = useState(null);
@@ -60,9 +78,27 @@ function Recovery() {
   // Mutación para enviar el nombre de usuario y obtener datos decodificados del backend
   const { mutate: mutateUsername } = useRecovery(userRecoveryData);
   // Mutación para enviar el método de verificación seleccionado (email o teléfono)
-  const { mutate: mutateSendMethod } = useMethodRecovery();
-  // mutacion para enviar el codigo OTP ingresado al usaurio 
-  const { mutate: mutateSendCode } = useCodeRecovery();
+  const { mutate: mutateSendMethod } = useMethodRecovery((success) => {
+    if (success) {
+      setCurrentStep(3);
+    } else {
+      setCurrentStep(1);
+    }
+  });
+  // mutacion para enviar el codigo OTP ingresado al usaurio
+  const { mutate: mutateSendCode } = useCodeRecovery((success) => {
+    if (success) {
+      setCurrentStep(4);
+    } else {
+      setCurrentStep(1);
+    }
+  });
+  // mutacion para el restablecimiento de contraseña
+  const { mutate: mutateSendChangePassword } = useChangePassword((success) => {
+    if (!success) {
+      setCurrentStep(1)
+    }
+  });
 
   /*
    * Funcion que recoge los datos del formulario para darle manejo
@@ -82,13 +118,12 @@ function Recovery() {
     // nos salimos por ahora para prueba
     // metodo no implementado por el momento ( se hace verificacion para evitar errores)
     if (data.method === "phone") {
-      toast.error("This R method is not available at the moment");
+      toast.error("This method is not available at the moment");
       return;
     }
     // agregamos el token al data
     data.token = infoUser.token;
     mutateSendMethod(data);
-    setCurrentStep(3);
   };
 
   const onSubmitCode = (data) => {
@@ -100,8 +135,11 @@ function Recovery() {
     data.code = code; // agregamos el codigo
     mutateSendCode(data);
     setCodeError("");
-    setCurrentStep(4);
+  };
 
+  const onSubmitConfirmPassword = (data) => {
+    data.token = infoUser.token; // agregamos el token al objeto
+    mutateSendChangePassword(data); // mutamos la informacion al hook
   };
 
   return (
@@ -294,27 +332,58 @@ function Recovery() {
                   VERIFY CODE
                 </button>
               </form>
+
+              {/* Sección adicional para reenviar código en una sola línea */}
+              <div className="mt-6 text-center flex justify-center items-center gap-2 text-sm text-gray-400 font-mono">
+                <AiOutlineWarning className="text-red-500 text-2xl " />
+                <span>Didn’t get the code?</span>
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep(2)} // ← redirige al segundo formulario
+                  className="font-semibold text-red-800 hover:text-red-500 underline underline-offset-2 transition duration-200"
+                >
+                  Send it again
+                </button>
+              </div>
             </>
           )}
+          {/* formulario 4 - actualizar contraseeña */}
           {currentStep === 4 && (
             <>
               <div className="text-center mt--3 mb-5">
                 <HelpIconModal
-                  title="Enter Verification Code"
-                  message="repita la contraseña."
+                  title="Confirm New Password"
+                  message="Please re-enter your new password to complete the change. Your password must be at least 9 characters long, include at least one uppercase letter, and contain at least one special character."
                 />
               </div>
 
-              <form onSubmit={handleSubmitCode(onSubmitCode)}>
-
-                <h1>hola , quede por aqui </h1>
-            
+              <form
+                onSubmit={handleSubmitConfirmPassword(onSubmitConfirmPassword)}
+              >
+                {/* nueva contraseña // se utiliza el componente reutilizable del password */}
+                <PasswordInput
+                  id="newPassword"
+                  labelText="New password"
+                  placeholder="Enter your new password"
+                  register={registerConfirmPassword}
+                  errors={errorsConfirmPassword}
+                  name="newPassword"
+                />
+                {/* confirmar contraseña */}
+                <PasswordInput
+                  id="confirmPassword"
+                  labelText="Confirm new password"
+                  placeholder="Confirm your new password"
+                  register={registerConfirmPassword}
+                  errors={errorsConfirmPassword}
+                  name="confirmPassword"
+                />
 
                 <button
                   type="submit"
                   className="w-full py-2 text-white font-semibold bg-gradient-to-r from-yellow-600 to-yellow-900 hover:from-yellow-500 hover:to-yellow-800 transition duration-300 rounded cursor-pointer"
                 >
-                  VERIFY CODE
+                  CHANGE PASSWORD
                 </button>
               </form>
             </>
