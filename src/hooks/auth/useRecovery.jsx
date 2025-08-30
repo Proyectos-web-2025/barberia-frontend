@@ -87,8 +87,8 @@ export const useChangePassword = (onSuccessCallback) => {
       toast.loading("Redirecting to login page...", {
         duration: 3000,
       });
-      // Redirección con pequeño delay para que el usuario vea el mensaje
-      setTimeout(() => navigate("/"), 3000);
+
+      onSuccessCallback(true);
     },
     onError: (error) => {
       const details = error.response?.data?.detail;

@@ -4,12 +4,15 @@
 
 import { useForm } from "react-hook-form"; // importacion de libreria para el manejo de los formularios
 import { PiWarningCircle } from "react-icons/pi"; // importacion de libreria para iconos
+import { AiOutlineWarning } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast"; // libreria para el estlilo de alertas
+import { useNavigate } from "react-router-dom";
 
 import { useLogin } from "../../hooks/auth/uselogin.jsx";
 import PasswordInput from "../../utils/password.jsx";
 
 function Login() {
+  const navigate = useNavigate(); // ← inicializas el hook
   /**
    * Constantes proporcionadas por react-hook-form:
    * - register: registra los inputs para que el formulario los controle.
@@ -85,6 +88,18 @@ function Login() {
               ENTER...
             </button>
           </form>
+
+          {/* Sección adicional para ir a la pagina de restablecimiento de contraseña */}
+          <div className="mt-6 text-center flex justify-center items-center gap-2 text-sm text-gray-400 font-mono">
+            <AiOutlineWarning className="text-red-500 " />
+            <button
+              type="button"
+              onClick={() => navigate("/recovery")} // ← redirige al recovery
+              className="font-semibold text-red-800 hover:text-red-500 underline underline-offset-2 transition duration-200"
+            >
+              Forgot your password?
+            </button>
+          </div>
         </div>
       </div>
     </>

@@ -9,6 +9,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/auth/login";
 import Recovery from "../pages/auth/recovery";
 
+
 // Define las rutas de tu aplicación con sus respectivos componentes.
 const router = createBrowserRouter(
   [

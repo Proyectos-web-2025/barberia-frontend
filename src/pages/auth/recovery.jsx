@@ -5,10 +5,11 @@
 import { useState } from "react"; // libreria de react para el manejo de visivilidad
 import { useForm } from "react-hook-form"; // libreria para el manejo del formulario
 import { yupResolver } from "@hookform/resolvers/yup"; // libreria para integrar yup con react-hook-form
-import { PiWarningCircle} from "react-icons/pi"; // importacion de libreria para iconos
-import { AiOutlineWarning } from 'react-icons/ai';
+import { PiWarningCircle } from "react-icons/pi"; // importacion de libreria para iconos
+import { AiOutlineWarning } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast"; // libreria para el estlilo de alertas
 import OtpInput from "react-otp-input"; // libreria para hacer input de codigo OTP
+import { useNavigate } from "react-router-dom";
 
 // importaciones de hook para cada formualrio
 import {
@@ -25,6 +26,7 @@ import { passwordSchema } from "../../utils/validationSchemas"; // utilidad para
 import { data } from "react-router";
 
 function Recovery() {
+  const navigate = useNavigate(); // ← inicializas el hook
   const [currentStep, setCurrentStep] = useState(1); // controla visibilidad de los formularios
 
   // Inicializa formularios separados para cada paso del flujo de recuperación.
@@ -95,8 +97,10 @@ function Recovery() {
   });
   // mutacion para el restablecimiento de contraseña
   const { mutate: mutateSendChangePassword } = useChangePassword((success) => {
-    if (!success) {
-      setCurrentStep(1)
+    if (success) {
+      navigate("/");
+    } else {
+      setCurrentStep(1);
     }
   });
 
@@ -388,6 +392,18 @@ function Recovery() {
               </form>
             </>
           )}
+
+          {/* Sección adicional para ir volver al login*/}
+          <div className="mt-6 text-center flex justify-center items-center gap-2 text-sm text-gray-400 font-mono">
+            <AiOutlineWarning className="text-red-500 " />
+            <button
+              type="button"
+              onClick={() => navigate("/")} // ← redirige al login
+              className="font-semibold text-red-800 hover:text-red-500 underline underline-offset-2 transition duration-200"
+            >
+              Back to login
+            </button>
+          </div>
         </div>
       </div>
     </>
