@@ -10,7 +10,9 @@ const API_URL = `${BASE_URL}/auth/login`;
 
 /* funcion para consumir ruta de la api del inicio de sesion */
 const loginUser = async (data) => {
-  const response = await axios.post(API_URL,data);
+  const response = await axios.post(API_URL,data,{
+     withCredentials: true // permite enviar y recibir co
+  });
   return response.data;
 };
 

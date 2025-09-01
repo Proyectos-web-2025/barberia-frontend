@@ -398,7 +398,7 @@ function Recovery() {
             <AiOutlineWarning className="text-red-500 " />
             <button
               type="button"
-              onClick={() => navigate("/")} // ← redirige al login
+              onClick={() => navigate("//")} // ← redirige al login
               className="font-semibold text-red-800 hover:text-red-500 underline underline-offset-2 transition duration-200"
             >
               Back to login

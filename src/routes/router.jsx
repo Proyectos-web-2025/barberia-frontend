@@ -8,6 +8,7 @@ import { createBrowserRouter } from "react-router-dom";
 // importaciones de paginas
 import Login from "../pages/auth/login";
 import Recovery from "../pages/auth/recovery";
+import DashboardAdmin from "../pages/admin/Dashboard"
 
 
 // Define las rutas de tu aplicación con sus respectivos componentes.
@@ -22,6 +23,11 @@ const router = createBrowserRouter(
       // ruta para restablecer contraseña
       path: "/recovery",
       element: <Recovery />,
+    },
+    {
+      // ruta para restablecer contraseña
+      path: "/admin",
+      element: <DashboardAdmin />,
     },
   ],
   {
