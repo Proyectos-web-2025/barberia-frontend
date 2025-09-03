@@ -5,7 +5,7 @@
 import { useForm } from "react-hook-form"; // importacion de libreria para el manejo de los formularios
 import { PiWarningCircle } from "react-icons/pi"; // importacion de libreria para iconos
 import { AiOutlineWarning } from "react-icons/ai";
-import toast, { Toaster } from "react-hot-toast"; // libreria para el estlilo de alertas
+import { Toaster } from "react-hot-toast"; // libreria para el estlilo de alertas
 import { useNavigate } from "react-router-dom";
 
 import { useLogin } from "../../hooks/auth/uselogin.jsx";
@@ -30,12 +30,13 @@ function Login() {
    * Funcion que recoge los datos del formulario para darle manejo
    */
   const onSubmit = (data) => {
-    mutate(data); // Dispara el login con los datos del formulario
+    mutate(data);
+     // Dispara el login con los datos del formulario
   };
 
   return (
     <>
-      <Toaster position="top-center" /> {/* alerta */}
+      <Toaster position="top-center"   /> {/* alerta */}
       <div className="h-screen flex items-center justify-center ">
         {/* Formulario de login */}
         <div className="w-full max-w-xs">
@@ -82,10 +83,11 @@ function Login() {
 
             {/* Botón de login */}
             <button
+              
               type="submit"
               className="font-mono w-full py-2 text-white font-semibold bg-gradient-to-r from-yellow-600 to-yellow-900 hover:from-yellow-500 hover:to-yellow-800 transition duration-300 rounded cursor-pointer"
             >
-              ENTER...
+               ENTER...
             </button>
           </form>
 
