@@ -1,7 +1,7 @@
 // importacion de libreria para el manejo de respuestas para los formularios
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "@/Apis/auth/loginApi"; // importacion de nuestra funcion que consume Api
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import toast from "react-hot-toast"; // libreria para el estlilo de alertas
 
@@ -22,7 +22,7 @@ export const useLogin = () => {
     onSuccess: (data) => {
       const roleRedirectMap = {
         1: "/admin",
-        2: "/barbero",
+        2: "/barber",
       };
 
       const role = data.role;

@@ -5,11 +5,14 @@
 // importacion de la libreria react router
 import { createBrowserRouter } from "react-router-dom";
 
+// importacion de proteccion de rutas
+import ProtectedRoute from "../utils/ProtectedRoute";
+
 // importaciones de paginas
 import Login from "../pages/auth/login";
 import Recovery from "../pages/auth/recovery";
-import DashboardAdmin from "../pages/admin/Dashboard"
-
+import Header from "../pages/admin/Dashboard";
+import Header2 from "../pages/barber/dashboard";
 
 // Define las rutas de tu aplicación con sus respectivos componentes.
 const router = createBrowserRouter(
@@ -25,9 +28,21 @@ const router = createBrowserRouter(
       element: <Recovery />,
     },
     {
-      // ruta para restablecer contraseña
       path: "/admin",
-      element: <DashboardAdmin />,
+      element: (
+        <ProtectedRoute allowedRoles={[1]}>
+          <Header />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      // ruta para  barber
+      path: "/barber",
+      element: (
+        <ProtectedRoute allowedRoles={[2]}>
+          <Header2 />
+        </ProtectedRoute>
+      ),
     },
   ],
   {
