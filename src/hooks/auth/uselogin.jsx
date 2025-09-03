@@ -7,17 +7,24 @@ import toast, { Toaster } from "react-hot-toast"; // libreria para el estlilo de
 
 export const useLogin = () => {
   const navigate = useNavigate();
-  return useMutation({
-    mutationFn: loginUser,
-    onSuccess: () => {
-      toast.loading("Inicio de sesion exitoso");
 
-      navigate("/admin")
+  return useMutation({
+    mutationFn: (formData) =>
+      toast.promise(loginUser(formData), {
+        loading: "Checking credentials...",
+        success: "Login successful. Redirecting to dashboard...",
+        error: (error) => {
+          const backendMessage = error.response?.data?.detail;
+          return backendMessage || "Unexpected error during login";
+        },
+      }),
+    onSuccess: () => {
+      setTimeout(() => {
+        navigate("/admin");
+      }, 3000); // ⏳ gives time for the toast to be read
     },
-    onError: (error) => {
-      const backendMessage = error.response?.data?.detail || "Error inesperado";
-      console.log("Mensaje del servidor:", backendMessage);
-      toast.error(backendMessage);
+    onError: () => {
+      // Error toast already handled by toast.promise
     },
   });
 };

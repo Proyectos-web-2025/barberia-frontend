@@ -82,7 +82,15 @@ function Recovery() {
   // Mutación para enviar el método de verificación seleccionado (email o teléfono)
   const { mutate: mutateSendMethod } = useMethodRecovery((success) => {
     if (success) {
+      toast.success(
+        `A verification code has been successfully sent to your registered email address ${infoUser.correo}.`,
+        {
+          duration: 5000,
+          closeButton: true,
+        }
+      );
       setCurrentStep(3);
+      forms.method.reset() // limpiamos el formulario anterior 
     } else {
       setCurrentStep(1);
     }
@@ -91,6 +99,7 @@ function Recovery() {
   const { mutate: mutateSendCode } = useCodeRecovery((success) => {
     if (success) {
       setCurrentStep(4);
+      forms.code.reset();
     } else {
       setCurrentStep(1);
     }
@@ -98,7 +107,7 @@ function Recovery() {
   // mutacion para el restablecimiento de contraseña
   const { mutate: mutateSendChangePassword } = useChangePassword((success) => {
     if (success) {
-      navigate("/");
+      forms.confirmPassword.reset()
     } else {
       setCurrentStep(1);
     }
@@ -148,7 +157,21 @@ function Recovery() {
 
   return (
     <>
-      <Toaster position="top-center" /> {/* alerta */}
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        toastOptions={{
+          // Define default options
+          duration: 3000,
+          removeDelay: 1000,
+          // Default options for specific types
+          success: {
+            duration: 5000,
+          },
+        }}
+      />
+      {/* alerta */}
       <div className="h-screen flex items-center justify-center">
         {/* fromualrio de restablecer contraseña */}
         <div className="w-full  max-w-xs">

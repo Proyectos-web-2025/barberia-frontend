@@ -77,30 +77,28 @@ export const useCodeRecovery = (onSuccessCallback) => {
 
 // funcion para restablecer la contraseña
 export const useChangePassword = (onSuccessCallback) => {
-  const navigate = useNavigate(); // ← inicializas el hook
+  const navigate = useNavigate();
+
   return useMutation({
-    mutationFn: changePassword,
-    onSuccess: (data) => {
-      console.log(data.message);
-      toast.success(data.message);
-      // aqui retornamos a la pagina de login
-      toast.loading("Redirecting to login page...", {
-        duration: 3000,
-      });
-
-      onSuccessCallback(true);
+    mutationFn: (formData) =>
+      toast.promise(changePassword(formData), {
+        loading: "Processing password change...",
+        success: "Password updated successfully. Redirecting to login...",
+        error: (err) => {
+          const details = err.response?.data?.detail;
+          if (Array.isArray(details)) {
+            return details.map((e) => e.msg).join(" | ");
+          }
+          return details || "Unexpected error occurred";
+        },
+      }),
+    onSuccess: () => {
+      setTimeout(() => {
+        navigate("//");
+        onSuccessCallback(true);
+      }, 3000); 
     },
-    onError: (error) => {
-      const details = error.response?.data?.detail;
-
-      // Mostrar en consola
-      if (Array.isArray(details)) {
-        const messages = details.map((err) => err.msg).join(" | ");
-        toast.error(messages);
-      } else {
-        toast.error(details || "Error inesperado");
-      }
-      // cualquier error de servidro retornamos al inicio
+    onError: () => {
       onSuccessCallback(false);
     },
   });
