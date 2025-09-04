@@ -11,8 +11,8 @@ import ProtectedRoute from "../utils/ProtectedRoute";
 // importaciones de paginas
 import Login from "../pages/auth/login";
 import Recovery from "../pages/auth/recovery";
-import Header from "../pages/admin/Dashboard";
-import Header2 from "../pages/barber/dashboard";
+import Admin from "../pages/admin/Dashboard";
+import Barber from "../pages/barber/dashboard";
 
 // Define las rutas de tu aplicación con sus respectivos componentes.
 const router = createBrowserRouter(
@@ -31,7 +31,7 @@ const router = createBrowserRouter(
       path: "/admin",
       element: (
         <ProtectedRoute allowedRoles={[1]}>
-          <Header />
+          <Admin />
         </ProtectedRoute>
       ),
     },
@@ -40,7 +40,7 @@ const router = createBrowserRouter(
       path: "/barber",
       element: (
         <ProtectedRoute allowedRoles={[2]}>
-          <Header2 />
+          <Barber />
         </ProtectedRoute>
       ),
     },
